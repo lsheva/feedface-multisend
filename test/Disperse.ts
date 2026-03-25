@@ -3,7 +3,6 @@ import { describe, it } from "node:test";
 import hre from "hardhat";
 
 const { viem, networkHelpers } = await hre.network.connect();
-
 const ETH_1 = 1_000_000_000_000_000_000n;
 
 async function deployFixture() {
@@ -62,10 +61,12 @@ describe("Disperse", () => {
     it("reverts when not enough ETH is sent", async () => {
       const { multiSend, alice } = await networkHelpers.loadFixture(deployFixture);
 
-      await assert.rejects(
+      await viem.assertions.revertWithCustomError(
         multiSend.write.disperse([[{ to: alice.account.address, amount: ETH_1 }], [], []], {
           value: ETH_1 / 2n,
         }),
+        multiSend,
+        "EthTransferFailed",
       );
     });
   });
@@ -98,12 +99,13 @@ describe("Disperse", () => {
 
       await token.write.mint([deployer.account.address, ETH_1 * 100n]);
 
-      await assert.rejects(
+      await viem.assertions.revertWith(
         multiSend.write.disperse([
           [],
           [{ token: token.address, to: alice.account.address, amount: ETH_1 }],
           [],
         ]),
+        "insufficient allowance",
       );
     });
   });
@@ -171,12 +173,14 @@ describe("Disperse", () => {
       await badToken.write.mint([deployer.account.address, ETH_1 * 100n]);
       await badToken.write.approve([multiSend.address, ETH_1 * 100n]);
 
-      await assert.rejects(
+      await viem.assertions.revertWithCustomError(
         multiSend.write.disperse([
           [],
           [{ token: badToken.address, to: alice.account.address, amount: ETH_1 }],
           [],
         ]),
+        multiSend,
+        "SafeERC20FailedOperation",
       );
     });
 
