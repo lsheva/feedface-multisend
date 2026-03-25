@@ -3,14 +3,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "compile": "hardhat compile",
+    "compile": "wagmi generate && cp artifacts/contracts/FeedFaceMultisend.sol/FeedFaceMultisend.json abi/FeedFaceMultisend.json",
     "test": "hardhat test",
     "init-code-hash": "hardhat run scripts/init-code-hash.ts",
-    "deploy:network": "hardhat run scripts/deploy.ts"
+    "deploy:network": "hardhat run scripts/deploy.ts",
+    "push": "git remote remove publish 2>/dev/null; git remote add publish git@github-personal:lsheva/feedface-multisend.git && git push publish HEAD --follow-tags; git remote remove publish"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox-viem": "^5.0.3",
     "@nomicfoundation/hardhat-verify": "^3.0.12",
-    "hardhat": "^3.2.0"
+    "@wagmi/cli": "^2.10.0",
+    "hardhat": "^3.2.0",
+    "viem": "^2.47.6"
   }
 }
