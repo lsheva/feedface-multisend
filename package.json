@@ -1,0 +1,16 @@
+{
+  "name": "feedface-multisend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "init-code-hash": "hardhat run scripts/init-code-hash.ts",
+    "deploy:network": "hardhat run scripts/deploy.ts"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox-viem": "^5.0.3",
+    "@nomicfoundation/hardhat-verify": "^3.0.12",
+    "hardhat": "^3.2.0"
+  }
+}
