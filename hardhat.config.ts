@@ -17,7 +17,7 @@ export default defineConfig({
   plugins: [hardhatToolboxViem],
   solidity: {
     version: "0.8.28",
-    settings: { optimizer: { enabled: true, runs: 1000 } },
+    settings: { viaIR: true, evmVersion: "paris", optimizer: { enabled: true, runs: 10000000 } },
   },
   networks: {
     // Testnets

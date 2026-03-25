@@ -7,7 +7,7 @@ const { viem, networkHelpers } = await hre.network.connect();
 const ETH_1 = 1_000_000_000_000_000_000n;
 
 async function deployFixture() {
-  const multiSend = await viem.deployContract("MultiSend");
+  const multiSend = await viem.deployContract("FeedFaceMultisend");
   const token = await viem.deployContract("MockERC20Permit", ["TestToken", "TT"]);
   const [deployer, alice, bob, charlie] = await viem.getWalletClients();
   const publicClient = await viem.getPublicClient();
